@@ -1,4 +1,4 @@
-import { Link, useSearch } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import {
 	Card,
 	CardContent,
@@ -11,7 +11,8 @@ import { AuthLayout } from "../auth-layout";
 import { UserAuthForm } from "./components/user-auth-form";
 
 export function SignIn() {
-	const { redirect } = useSearch({ from: "/(auth)/sign-in" });
+	const [searchParams] = useSearchParams();
+	const redirect = searchParams.get("redirect") ?? undefined;
 
 	return (
 		<AuthLayout>

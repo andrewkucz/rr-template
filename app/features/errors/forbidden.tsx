@@ -1,9 +1,8 @@
-import { useNavigate, useRouter } from "react-router";
+import { useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
 
 export function ForbiddenError() {
 	const navigate = useNavigate();
-	const { history } = useRouter();
 	return (
 		<div className="h-svh">
 			<div className="m-auto flex h-full w-full flex-col items-center justify-center gap-2">
@@ -14,12 +13,10 @@ export function ForbiddenError() {
 					to view this resource.
 				</p>
 				<div className="mt-6 flex gap-4">
-					<Button variant="outline" onClick={() => history.go(-1)}>
+					<Button variant="outline" onClick={() => navigate(-1)}>
 						Go Back
 					</Button>
-					<Button onClick={() => navigate({ pathname: "/" })}>
-						Back to Home
-					</Button>
+					<Button onClick={() => navigate("/")}>Back to Home</Button>
 				</div>
 			</div>
 		</div>

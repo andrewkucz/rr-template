@@ -4,16 +4,16 @@ import { appRouter } from "@/lib/trpc/router";
 import { createContext } from "@/lib/trpc/server";
 
 function handleRequest(args: LoaderFunctionArgs | ActionFunctionArgs) {
-  return fetchRequestHandler({
-    endpoint: "/api/trpc",
-    req: args.request,
-    router: appRouter,
-    createContext,
-  });
+	return fetchRequestHandler({
+		endpoint: "/api/trpc",
+		req: args.request,
+		router: appRouter,
+		createContext,
+	});
 }
 export const loader = async (args: LoaderFunctionArgs) => {
-  return handleRequest(args);
+	return handleRequest(args);
 };
 export const action = async (args: ActionFunctionArgs) => {
-  return handleRequest(args);
+	return handleRequest(args);
 };

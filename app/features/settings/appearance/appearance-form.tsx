@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -13,6 +12,7 @@ import {
 } from "@/components/form";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ChevronDownIcon } from "@/components/ui/radix-icons";
 import { fonts } from "@/config/fonts";
 import { useFont } from "@/context/font-provider";
 import { useTheme } from "@/context/theme-provider";
@@ -42,8 +42,8 @@ export function AppearanceForm() {
 	});
 
 	function onSubmit(data: AppearanceFormValues) {
-		if (data.font != font) setFont(data.font);
-		if (data.theme != theme) setTheme(data.theme);
+		if (data.font !== font) setFont(data.font);
+		if (data.theme !== theme) setTheme(data.theme);
 
 		showSubmittedData(data);
 	}

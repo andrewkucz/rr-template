@@ -43,21 +43,23 @@ export function NavUser({ user }: NavUserProps) {
 			<SidebarMenu>
 				<SidebarMenuItem>
 					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<SidebarMenuButton
-								size="lg"
-								className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-							>
-								<Avatar className="h-8 w-8 rounded-lg">
-									<AvatarImage src={user.avatar} alt={user.name} />
-									<AvatarFallback className="rounded-lg">SN</AvatarFallback>
-								</Avatar>
-								<div className="grid flex-1 text-start text-sm leading-tight">
-									<span className="truncate font-semibold">{user.name}</span>
-									<span className="truncate text-xs">{user.email}</span>
-								</div>
-								<ChevronsUpDown className="ms-auto size-4" />
-							</SidebarMenuButton>
+						<DropdownMenuTrigger
+							render={
+								<SidebarMenuButton
+									size="lg"
+									className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+								/>
+							}
+						>
+							<Avatar className="h-8 w-8 rounded-lg">
+								<AvatarImage src={user.avatar} alt={user.name} />
+								<AvatarFallback className="rounded-lg">SN</AvatarFallback>
+							</Avatar>
+							<div className="grid flex-1 text-start text-sm leading-tight">
+								<span className="truncate font-semibold">{user.name}</span>
+								<span className="truncate text-xs">{user.email}</span>
+							</div>
+							<ChevronsUpDown className="ms-auto size-4" />
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
 							className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
@@ -86,23 +88,19 @@ export function NavUser({ user }: NavUserProps) {
 							</DropdownMenuGroup>
 							<DropdownMenuSeparator />
 							<DropdownMenuGroup>
-								<DropdownMenuItem asChild>
-									<Link to="/settings/account">
-										<BadgeCheck />
-										Account
-									</Link>
+								<DropdownMenuItem render={<Link to="/settings/account" />}>
+									<BadgeCheck />
+									Account
 								</DropdownMenuItem>
-								<DropdownMenuItem asChild>
-									<Link to="/settings">
-										<CreditCard />
-										Billing
-									</Link>
+								<DropdownMenuItem render={<Link to="/settings" />}>
+									<CreditCard />
+									Billing
 								</DropdownMenuItem>
-								<DropdownMenuItem asChild>
-									<Link to="/settings/notifications">
-										<Bell />
-										Notifications
-									</Link>
+								<DropdownMenuItem
+									render={<Link to="/settings/notifications" />}
+								>
+									<Bell />
+									Notifications
 								</DropdownMenuItem>
 							</DropdownMenuGroup>
 							<DropdownMenuSeparator />

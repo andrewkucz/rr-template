@@ -8,6 +8,13 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { NavigationProgress } from "./components/navigation-progress";
+import { Toaster } from "./components/ui/sonner";
+import { DirectionProvider } from "./context/direction-provider";
+import { FontProvider } from "./context/font-provider";
+import { ThemeProvider } from "./context/theme-provider";
+import { GeneralError } from "./features/errors/general-error";
+import { NotFoundError } from "./features/errors/not-found-error";
 import "./styles/globals.css";
 import { TRPCQueryClientProvider } from "./lib/trpc/provider";
 
@@ -38,7 +45,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body>
-				<TRPCQueryClientProvider>{children}</TRPCQueryClientProvider>
+				<TRPCQueryClientProvider>
+					<ThemeProvider>
+						<FontProvider>
+							<DirectionProvider>
+								<NavigationProgress />
+								{children}
+								<Toaster duration={5000} />
+							</DirectionProvider>
+						</FontProvider>
+					</ThemeProvider>
+				</TRPCQueryClientProvider>
 				<ScrollRestoration />
 				<Scripts />
 			</body>
@@ -51,30 +68,22 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-	let message = "Oops!";
-	let details = "An unexpected error occurred.";
-	let stack: string | undefined;
-
 	if (isRouteErrorResponse(error)) {
-		message = error.status === 404 ? "404" : "Error";
-		details =
-			error.status === 404
-				? "The requested page could not be found."
-				: error.statusText || details;
-	} else if (import.meta.env.DEV && error && error instanceof Error) {
-		details = error.message;
-		stack = error.stack;
+		if (error.status === 404) {
+			return <NotFoundError />;
+		}
 	}
 
-	return (
-		<main className="pt-16 p-4 container mx-auto">
-			<h1>{message}</h1>
-			<p>{details}</p>
-			{stack && (
-				<pre className="w-full p-4 overflow-x-auto">
-					<code>{stack}</code>
+	if (import.meta.env.DEV && error instanceof Error) {
+		return (
+			<main className="container mx-auto p-4 pt-16">
+				<GeneralError minimal />
+				<pre className="mt-4 w-full overflow-x-auto rounded-md border p-4 text-sm">
+					<code>{error.stack}</code>
 				</pre>
-			)}
-		</main>
-	);
+			</main>
+		);
+	}
+
+	return <GeneralError />;
 }

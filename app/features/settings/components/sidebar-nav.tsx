@@ -24,9 +24,10 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
 	const navigate = useNavigate();
 	const [val, setVal] = useState(pathname ?? "/settings");
 
-	const handleSelect = (e: string) => {
-		setVal(e);
-		navigate({ pathname: e });
+	const handleSelect = (value: string | undefined) => {
+		if (!value) return;
+		setVal(value);
+		navigate(value);
 	};
 
 	return (

@@ -73,7 +73,7 @@ export function UserAuthForm({
 
 				// Redirect to the stored location or default to dashboard
 				const targetPath = redirectTo || "/";
-				navigate({ pathname: targetPath, replace: true });
+				navigate(targetPath, { replace: true });
 
 				return `Welcome back, ${data.email}!`;
 			},

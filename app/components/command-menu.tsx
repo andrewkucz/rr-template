@@ -36,14 +36,14 @@ export function CommandMenu() {
 					<CommandEmpty>No results found.</CommandEmpty>
 					{sidebarData.navGroups.map((group) => (
 						<CommandGroup key={group.title} heading={group.title}>
-							{group.items.map((navItem, i) => {
+							{group.items.map((navItem) => {
 								if (navItem.url)
 									return (
 										<CommandItem
-											key={`${navItem.url}-${i}`}
+											key={navItem.url}
 											value={navItem.title}
 											onSelect={() => {
-												runCommand(() => navigate({ pathname: navItem.url }));
+												runCommand(() => navigate(navItem.url));
 											}}
 										>
 											<div className="flex size-4 items-center justify-center">
@@ -53,12 +53,12 @@ export function CommandMenu() {
 										</CommandItem>
 									);
 
-								return navItem.items?.map((subItem, i) => (
+								return navItem.items?.map((subItem) => (
 									<CommandItem
-										key={`${navItem.title}-${subItem.url}-${i}`}
+										key={`${navItem.title}-${subItem.url}`}
 										value={`${navItem.title}-${subItem.url}`}
 										onSelect={() => {
-											runCommand(() => navigate({ pathname: subItem.url }));
+											runCommand(() => navigate(subItem.url));
 										}}
 									>
 										<div className="flex size-4 items-center justify-center">

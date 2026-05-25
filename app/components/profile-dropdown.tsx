@@ -20,13 +20,15 @@ export function ProfileDropdown() {
 	return (
 		<>
 			<DropdownMenu modal={false}>
-				<DropdownMenuTrigger asChild>
-					<Button variant="ghost" className="relative h-8 w-8 rounded-full">
-						<Avatar className="h-8 w-8">
-							<AvatarImage src="/avatars/01.png" alt="@shadcn" />
-							<AvatarFallback>SN</AvatarFallback>
-						</Avatar>
-					</Button>
+				<DropdownMenuTrigger
+					render={
+						<Button variant="ghost" className="relative h-8 w-8 rounded-full" />
+					}
+				>
+					<Avatar className="h-8 w-8">
+						<AvatarImage src="/avatars/01.png" alt="@shadcn" />
+						<AvatarFallback>SN</AvatarFallback>
+					</Avatar>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent className="w-56" align="end" forceMount>
 					<DropdownMenuLabel className="font-normal">
@@ -39,23 +41,17 @@ export function ProfileDropdown() {
 					</DropdownMenuLabel>
 					<DropdownMenuSeparator />
 					<DropdownMenuGroup>
-						<DropdownMenuItem asChild>
-							<Link to="/settings">
-								Profile
-								<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-							</Link>
+						<DropdownMenuItem render={<Link to="/settings" />}>
+							Profile
+							<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
 						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<Link to="/settings">
-								Billing
-								<DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-							</Link>
+						<DropdownMenuItem render={<Link to="/settings" />}>
+							Billing
+							<DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
 						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<Link to="/settings">
-								Settings
-								<DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-							</Link>
+						<DropdownMenuItem render={<Link to="/settings" />}>
+							Settings
+							<DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
 						</DropdownMenuItem>
 						<DropdownMenuItem>New Team</DropdownMenuItem>
 					</DropdownMenuGroup>

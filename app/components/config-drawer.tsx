@@ -43,15 +43,17 @@ export function ConfigDrawer() {
 
 	return (
 		<Sheet>
-			<SheetTrigger asChild>
-				<Button
-					size="icon"
-					variant="ghost"
-					aria-label="Open theme settings"
-					className="rounded-full"
-				>
-					<Settings aria-hidden="true" />
-				</Button>
+			<SheetTrigger
+				render={
+					<Button
+						size="icon"
+						variant="ghost"
+						aria-label="Open theme settings"
+						className="rounded-full"
+					/>
+				}
+			>
+				<Settings aria-hidden="true" />
 			</SheetTrigger>
 			<SheetContent className="flex flex-col">
 				<SheetHeader className="pb-0 text-start">

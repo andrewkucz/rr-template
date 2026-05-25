@@ -11,7 +11,7 @@ import {
 	type VisibilityState,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { getRouteApi } from "react-router";
+import { useSearchParams } from "react-router";
 import { DataTablePagination, DataTableToolbar } from "@/components/data-table";
 import {
 	Table,
@@ -21,20 +21,26 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useTableUrlState } from "@/hooks/use-table-url-state";
+import {
+	createSearchParamsNavigate,
+	searchParamsToSearchRecord,
+	useTableUrlState,
+} from "@/hooks/use-table-url-state";
 import { cn } from "@/lib/utils";
 import { priorities, statuses } from "../data/data";
 import type { Task } from "../data/schema";
 import { DataTableBulkActions } from "./data-table-bulk-actions";
 import { tasksColumns as columns } from "./tasks-columns";
 
-const route = getRouteApi("/_authenticated/tasks/");
-
 type DataTableProps = {
 	data: Task[];
 };
 
 export function TasksTable({ data }: DataTableProps) {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const search = searchParamsToSearchRecord(searchParams);
+	const navigate = createSearchParamsNavigate(setSearchParams);
+
 	// Local UI-only states
 	const [rowSelection, setRowSelection] = useState({});
 	const [sorting, setSorting] = useState<SortingState>([]);
@@ -55,8 +61,8 @@ export function TasksTable({ data }: DataTableProps) {
 		onPaginationChange,
 		ensurePageInRange,
 	} = useTableUrlState({
-		search: route.useSearch(),
-		navigate: route.useNavigate(),
+		search,
+		navigate,
 		pagination: { defaultPage: 1, defaultPageSize: 10 },
 		globalFilter: { enabled: true, key: "filter" },
 		columnFilters: [

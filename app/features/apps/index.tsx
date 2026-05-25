@@ -1,6 +1,6 @@
 import { ArrowDownAZ, ArrowUpAZ, SlidersHorizontal } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
-import { getRouteApi } from "react-router";
+import { useSearchParams } from "react-router";
 import { ConfigDrawer } from "@/components/config-drawer";
 import { Header } from "@/components/layout/header";
 import { Main } from "@/components/layout/main";
@@ -17,9 +17,11 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import {
+	createSearchParamsNavigate,
+	searchParamsToSearchRecord,
+} from "@/hooks/use-table-url-state";
 import { apps } from "./data/apps";
-
-const route = getRouteApi("/_authenticated/apps/");
 
 type AppType = "all" | "connected" | "notConnected";
 
@@ -30,12 +32,15 @@ const appText = new Map<AppType, string>([
 ]);
 
 export function Apps() {
-	const {
-		filter = "",
-		type = "all",
-		sort: initSort = "asc",
-	} = route.useSearch();
-	const navigate = route.useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
+	const search = searchParamsToSearchRecord(searchParams);
+	const navigate = createSearchParamsNavigate(setSearchParams);
+	const filter = typeof search.filter === "string" ? search.filter : "";
+	const type: AppType =
+		search.type === "connected" || search.type === "notConnected"
+			? search.type
+			: "all";
+	const initSort: "asc" | "desc" = search.sort === "desc" ? "desc" : "asc";
 
 	const [sort, setSort] = useState(initSort);
 	const [appType, setAppType] = useState(type);
@@ -66,19 +71,22 @@ export function Apps() {
 		});
 	};
 
-	const handleTypeChange = (value: AppType) => {
-		setAppType(value);
+	const handleTypeChange = (value: string | undefined) => {
+		const nextType: AppType =
+			value === "connected" || value === "notConnected" ? value : "all";
+		setAppType(nextType);
 		navigate({
 			search: (prev) => ({
 				...prev,
-				type: value === "all" ? undefined : value,
+				type: nextType === "all" ? undefined : nextType,
 			}),
 		});
 	};
 
-	const handleSortChange = (sort: "asc" | "desc") => {
-		setSort(sort);
-		navigate({ search: (prev) => ({ ...prev, sort }) });
+	const handleSortChange = (value: string | undefined) => {
+		const nextSort: "asc" | "desc" = value === "desc" ? "desc" : "asc";
+		setSort(nextSort);
+		navigate({ search: (prev) => ({ ...prev, sort: nextSort }) });
 	};
 
 	return (

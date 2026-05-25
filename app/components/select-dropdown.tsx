@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 
 type SelectDropdownProps = {
-	onValueChange?: (value: string) => void;
+	onValueChange?: (value: string | undefined) => void;
 	defaultValue: string | undefined;
 	placeholder?: string;
 	isPending?: boolean;
