@@ -24,6 +24,7 @@ export function Analytics() {
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Total Clicks</CardTitle>
 						<svg
+							aria-hidden="true"
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
 							fill="none"
@@ -48,6 +49,7 @@ export function Analytics() {
 							Unique Visitors
 						</CardTitle>
 						<svg
+							aria-hidden="true"
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
 							fill="none"
@@ -70,6 +72,7 @@ export function Analytics() {
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Bounce Rate</CardTitle>
 						<svg
+							aria-hidden="true"
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
 							fill="none"
@@ -91,6 +94,7 @@ export function Analytics() {
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 						<CardTitle className="text-sm font-medium">Avg. Session</CardTitle>
 						<svg
+							aria-hidden="true"
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
 							fill="none"

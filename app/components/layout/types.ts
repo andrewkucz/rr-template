@@ -1,5 +1,3 @@
-import type { LinkProps } from "react-router";
-
 type User = {
 	name: string;
 	email: string;

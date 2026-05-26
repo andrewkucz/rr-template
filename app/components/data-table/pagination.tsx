@@ -89,7 +89,11 @@ export function DataTablePagination<TData>({
 
 					{/* Page number buttons */}
 					{pageNumbers.map((pageNumber, index) => (
-						<div key={`${pageNumber}-${index}`} className="flex items-center">
+						<div
+							// biome-ignore lint/suspicious/noArrayIndexKey: Ellipsis placeholders can repeat, so the index disambiguates stable pagination gaps.
+							key={`${pageNumber}-${index}`}
+							className="flex items-center"
+						>
 							{pageNumber === "..." ? (
 								<span className="px-1 text-sm text-muted-foreground">...</span>
 							) : (

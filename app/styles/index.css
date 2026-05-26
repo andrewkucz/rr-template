@@ -19,6 +19,7 @@
 
 	/* Override Radix scroll locking for sticky headers */
 	body[data-scroll-locked] {
+		/* biome-ignore lint/complexity/noImportantStyles: Required to override Radix inline scroll locking for sticky layouts. */
 		overflow: unset !important;
 	}
 
@@ -33,6 +34,7 @@
 		input,
 		select,
 		textarea {
+			/* biome-ignore lint/complexity/noImportantStyles: Required to prevent iOS Safari zoom from input font-size overrides. */
 			font-size: 16px !important;
 		}
 	}

@@ -19,6 +19,11 @@ import { Separator } from "@/components/ui/separator";
 import { apps } from "./data/apps";
 
 type AppType = "all" | "connected" | "notConnected";
+type SearchState = {
+	filter?: string;
+	type?: AppType;
+	sort?: "asc" | "desc";
+};
 
 const appText = new Map<AppType, string>([
 	["all", "All Apps"],
@@ -27,12 +32,12 @@ const appText = new Map<AppType, string>([
 ]);
 
 // TODO
-const search = {
+const search: SearchState = {
 	filter: "",
 	type: "all",
 	sort: "asc",
 };
-const navigate = (args: { search: (prev: any) => any }) => {};
+const navigate = (_args: { search: (prev: SearchState) => SearchState }) => {};
 
 export function Apps() {
 	const { filter = "", type = "all", sort: initSort = "asc" } = search;

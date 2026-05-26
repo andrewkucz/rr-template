@@ -1,4 +1,3 @@
-import { useNavigate, useSearchParams } from "react-router";
 import { ConfigDrawer } from "@/components/config-drawer";
 import { Header } from "@/components/layout/header";
 import { Main } from "@/components/layout/main";
@@ -12,9 +11,6 @@ import { UsersTable } from "./components/users-table";
 import { users } from "./data/users";
 
 export function Users() {
-	const [search] = useSearchParams();
-	const navigate = useNavigate();
-
 	return (
 		<UsersProvider>
 			<Header fixed>
