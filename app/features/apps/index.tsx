@@ -1,5 +1,6 @@
 import { ArrowDownAZ, ArrowUpAZ, SlidersHorizontal } from "lucide-react";
-import { type ChangeEvent, useState } from "react";
+import { parseAsStringEnum, useQueryState } from "nuqs";
+import type { ChangeEvent } from "react";
 import { ConfigDrawer } from "@/components/config-drawer";
 import { Header } from "@/components/layout/header";
 import { Main } from "@/components/layout/main";
@@ -19,11 +20,6 @@ import { Separator } from "@/components/ui/separator";
 import { apps } from "./data/apps";
 
 type AppType = "all" | "connected" | "notConnected";
-type SearchState = {
-	filter?: string;
-	type?: AppType;
-	sort?: "asc" | "desc";
-};
 
 const appText = new Map<AppType, string>([
 	["all", "All Apps"],
@@ -31,20 +27,20 @@ const appText = new Map<AppType, string>([
 	["notConnected", "Not Connected"],
 ]);
 
-// TODO
-const search: SearchState = {
-	filter: "",
-	type: "all",
-	sort: "asc",
-};
-const navigate = (_args: { search: (prev: SearchState) => SearchState }) => {};
+const appTypes = [...appText.keys()];
 
 export function Apps() {
-	const { filter = "", type = "all", sort: initSort = "asc" } = search;
-
-	const [sort, setSort] = useState(initSort);
-	const [appType, setAppType] = useState(type as AppType);
-	const [searchTerm, setSearchTerm] = useState(filter);
+	const [sort, setSort] = useQueryState(
+		"sort",
+		parseAsStringEnum(["asc", "desc"]).withDefault("asc"),
+	);
+	const [appType, setAppType] = useQueryState(
+		"type",
+		parseAsStringEnum(appTypes).withDefault("all"),
+	);
+	const [searchTerm, setSearchTerm] = useQueryState("filter", {
+		defaultValue: "",
+	});
 
 	const filteredApps = apps
 		.sort((a, b) =>
@@ -62,28 +58,11 @@ export function Apps() {
 		.filter((app) => app.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
 	const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-		setSearchTerm(e.target.value);
-		navigate({
-			search: (prev) => ({
-				...prev,
-				filter: e.target.value || undefined,
-			}),
-		});
-	};
-
-	const handleTypeChange = (value: AppType) => {
-		setAppType(value);
-		navigate({
-			search: (prev) => ({
-				...prev,
-				type: value === "all" ? undefined : value,
-			}),
-		});
+		setSearchTerm(e.target.value ?? null);
 	};
 
 	const handleSortChange = (sort: "asc" | "desc") => {
 		setSort(sort);
-		navigate({ search: (prev) => ({ ...prev, sort }) });
 	};
 
 	return (
@@ -114,7 +93,10 @@ export function Apps() {
 							value={searchTerm}
 							onChange={handleSearch}
 						/>
-						<Select value={appType} onValueChange={handleTypeChange}>
+						<Select
+							value={appType}
+							onValueChange={(val) => setAppType(val as AppType)}
+						>
 							<SelectTrigger className="w-36">
 								<SelectValue>{appText.get(appType)}</SelectValue>
 							</SelectTrigger>

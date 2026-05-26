@@ -1,5 +1,6 @@
 import { Menu } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
+import { AppLink } from "@/components/app-link";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -13,12 +14,13 @@ type TopNavProps = React.HTMLAttributes<HTMLElement> & {
 	links: {
 		title: string;
 		href: string;
-		isActive: boolean;
 		disabled?: boolean;
 	}[];
 };
 
 export function TopNav({ className, links, ...props }: TopNavProps) {
+	const { pathname } = useLocation();
+
 	return (
 		<>
 			<DropdownMenu modal={false}>
@@ -33,7 +35,7 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent side="bottom" align="start">
-					{links.map(({ title, href, isActive, disabled }) => (
+					{links.map(({ title, href, disabled }) => (
 						<DropdownMenuItem
 							key={`${title}-${href}`}
 							disabled={disabled}
@@ -41,7 +43,7 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
 						>
 							<Link
 								to={href}
-								className={!isActive ? "text-muted-foreground" : ""}
+								className="text-sm aria-disabled:text-muted-foreground"
 							>
 								{title}
 							</Link>
@@ -57,16 +59,16 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
 				)}
 				{...props}
 			>
-				{links.map(({ title, href, isActive, disabled }) => (
-					<Link
+				{links.map(({ title, href, disabled }) => (
+					<AppLink
 						key={`${title}-${href}`}
 						to={href}
-						// TODO not styled
-						aria-disabled={disabled}
-						className={`text-sm font-medium transition-colors hover:text-primary ${isActive ? "" : "text-muted-foreground"}`}
+						active={href === pathname}
+						disabled={disabled}
+						className="text-sm"
 					>
 						{title}
-					</Link>
+					</AppLink>
 				))}
 			</nav>
 		</>

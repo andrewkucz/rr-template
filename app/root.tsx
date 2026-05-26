@@ -16,6 +16,7 @@ import { ThemeProvider } from "./context/theme-provider";
 import { GeneralError } from "./features/errors/general-error";
 import { NotFoundError } from "./features/errors/not-found-error";
 import "./styles/index.css";
+import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import AuthProvider from "./lib/auth/provider";
 import { TRPCQueryClientProvider } from "./lib/trpc/provider";
 
@@ -46,19 +47,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body>
-				<TRPCQueryClientProvider>
-					<AuthProvider>
-						<ThemeProvider>
-							<FontProvider>
-								<DirectionProvider>
-									<NavigationProgress />
-									{children}
-									<Toaster duration={5000} />
-								</DirectionProvider>
-							</FontProvider>
-						</ThemeProvider>
-					</AuthProvider>
-				</TRPCQueryClientProvider>
+				<NuqsAdapter>
+					<TRPCQueryClientProvider>
+						<AuthProvider>
+							<ThemeProvider>
+								<FontProvider>
+									<DirectionProvider>
+										<NavigationProgress />
+										{children}
+										<Toaster duration={5000} />
+									</DirectionProvider>
+								</FontProvider>
+							</ThemeProvider>
+						</AuthProvider>
+					</TRPCQueryClientProvider>
+				</NuqsAdapter>
 				<ScrollRestoration />
 				<Scripts />
 			</body>

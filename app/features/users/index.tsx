@@ -1,9 +1,14 @@
+import { useSearchParams } from "react-router";
 import { ConfigDrawer } from "@/components/config-drawer";
 import { Header } from "@/components/layout/header";
 import { Main } from "@/components/layout/main";
 import { ProfileDropdown } from "@/components/profile-dropdown";
 import { Search } from "@/components/search";
 import { ThemeSwitch } from "@/components/theme-switch";
+import {
+	createSearchParamsNavigate,
+	searchParamsToSearchRecord,
+} from "@/hooks/use-table-url-state";
 import { UsersDialogs } from "./components/users-dialogs";
 import { UsersPrimaryButtons } from "./components/users-primary-buttons";
 import { UsersProvider } from "./components/users-provider";
@@ -11,6 +16,8 @@ import { UsersTable } from "./components/users-table";
 import { users } from "./data/users";
 
 export function Users() {
+	const [search, setSearch] = useSearchParams();
+
 	return (
 		<UsersProvider>
 			<Header fixed>
@@ -30,8 +37,11 @@ export function Users() {
 					</div>
 					<UsersPrimaryButtons />
 				</div>
-				{/* TODO better nav func and search as object */}
-				<UsersTable data={users} search={{}} navigate={() => {}} />
+				<UsersTable
+					data={users}
+					search={searchParamsToSearchRecord(search)}
+					navigate={createSearchParamsNavigate(setSearch)}
+				/>
 			</Main>
 
 			<UsersDialogs />
