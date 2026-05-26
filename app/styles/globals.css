@@ -75,6 +75,7 @@
 		height: 0;
 	}
 	to {
+		/* TODO - find right variable name for these */
 		height: var(--radix-collapsible-content-height);
 	}
 }

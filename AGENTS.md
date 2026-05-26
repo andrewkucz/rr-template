@@ -2,7 +2,7 @@
 
 ## Stack
 
-React Router v7 (framework mode) · tRPC v11 · TanStack React Query v5 · Better Auth · Drizzle ORM (PostgreSQL) · shadcn/Radix UI · Tailwind CSS v4 · Biome · TypeScript
+React Router v7 (framework mode) · tRPC v11 · TanStack React Query v5 · Better Auth · Drizzle ORM (PostgreSQL) · shadcn/BaseUI · Tailwind CSS v4 · Biome · TypeScript
 
 ## Commands
 
