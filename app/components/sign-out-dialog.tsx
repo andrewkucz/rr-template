@@ -1,6 +1,9 @@
+import { AuthQueryContext } from "@daveyplate/better-auth-tanstack";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { ConfirmDialog } from "@/components/confirm-dialog";
-import { useAuthStore } from "@/stores/auth-store";
+import { authClient } from "@/lib/auth/browser";
 
 interface SignOutDialogProps {
 	open: boolean;
@@ -10,22 +13,28 @@ interface SignOutDialogProps {
 export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { auth } = useAuthStore();
 
-	const handleSignOut = () => {
-		auth.reset();
-		// Preserve current location for redirect after sign-in
-		const currentPath = location.pathname;
-		navigate(
-			{
-				pathname: "/sign-in",
-				search: `redirect=${currentPath}`,
-			},
-			{
-				replace: true,
-			},
-		);
-	};
+	const { sessionKey } = useContext(AuthQueryContext);
+	const queryClient = useQueryClient();
+
+	const { mutate: signOut } = useMutation({
+		mutationFn: () => {
+			return authClient.signOut();
+		},
+		onSuccess: () => {
+			const currentPath = location.pathname;
+			queryClient.resetQueries({ queryKey: sessionKey });
+			navigate(
+				{
+					pathname: "/sign-in",
+					search: `redirect=${currentPath}`,
+				},
+				{
+					replace: true,
+				},
+			);
+		},
+	});
 
 	return (
 		<ConfirmDialog
@@ -35,7 +44,7 @@ export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
 			desc="Are you sure you want to sign out? You will need to sign in again to access your account."
 			confirmText="Sign out"
 			destructive
-			handleConfirm={handleSignOut}
+			handleConfirm={signOut}
 			className="sm:max-w-sm"
 		/>
 	);

@@ -1,6 +1,7 @@
+import { AuthQueryContext } from "@daveyplate/better-auth-tanstack";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, LogIn } from "lucide-react";
-import { useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -17,8 +18,9 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { cn, sleep } from "@/lib/utils";
-import { useAuthStore } from "@/stores/auth-store";
+import { authClient } from "@/lib/auth/browser";
+import { useAuthMutation } from "@/lib/auth/hooks";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
 	email: z.email({
@@ -39,9 +41,13 @@ export function UserAuthForm({
 	redirectTo,
 	...props
 }: UserAuthFormProps) {
-	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
-	const { auth } = useAuthStore();
+
+	const { sessionKey: queryKey } = useContext(AuthQueryContext);
+	const { mutateAsync, isPending } = useAuthMutation({
+		queryKey,
+		mutationFn: authClient.signIn.email,
+	});
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -52,29 +58,12 @@ export function UserAuthForm({
 	});
 
 	function onSubmit(data: z.infer<typeof formSchema>) {
-		setIsLoading(true);
-
-		toast.promise(sleep(2000), {
+		toast.promise(mutateAsync(data), {
 			loading: "Signing in...",
 			success: () => {
-				setIsLoading(false);
-
-				// Mock successful authentication with expiry computed at success time
-				const mockUser = {
-					accountNo: "ACC001",
-					email: data.email,
-					role: ["user"],
-					exp: Date.now() + 24 * 60 * 60 * 1000, // 24 hours from now
-				};
-
-				// Set user and access token
-				auth.setUser(mockUser);
-				auth.setAccessToken("mock-access-token");
-
 				// Redirect to the stored location or default to dashboard
 				const targetPath = redirectTo || "/";
 				navigate({ pathname: targetPath }, { replace: true });
-
 				return `Welcome back, ${data.email}!`;
 			},
 			error: "Error",
@@ -120,8 +109,8 @@ export function UserAuthForm({
 						</FormItem>
 					)}
 				/>
-				<Button className="mt-2" disabled={isLoading}>
-					{isLoading ? <Loader2 className="animate-spin" /> : <LogIn />}
+				<Button className="mt-2" disabled={isPending}>
+					{isPending ? <Loader2 className="animate-spin" /> : <LogIn />}
 					Sign in
 				</Button>
 
@@ -137,10 +126,10 @@ export function UserAuthForm({
 				</div>
 
 				<div className="grid grid-cols-2 gap-2">
-					<Button variant="outline" type="button" disabled={isLoading}>
+					<Button variant="outline" type="button" disabled={isPending}>
 						<IconGithub className="h-4 w-4" /> GitHub
 					</Button>
-					<Button variant="outline" type="button" disabled={isLoading}>
+					<Button variant="outline" type="button" disabled={isPending}>
 						<IconFacebook className="h-4 w-4" /> Facebook
 					</Button>
 				</div>
