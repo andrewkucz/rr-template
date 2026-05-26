@@ -21,21 +21,19 @@ export function DatePicker({
 }: DatePickerProps) {
 	return (
 		<Popover>
-			<PopoverTrigger
-				render={
-					<Button
-						variant="outline"
-						data-empty={!selected}
-						className="w-60 justify-start text-start font-normal data-[empty=true]:text-muted-foreground"
-					/>
-				}
-			>
-				{selected ? (
-					format(selected, "MMM d, yyyy")
-				) : (
-					<span>{placeholder}</span>
-				)}
-				<CalendarIcon className="ms-auto h-4 w-4 opacity-50" />
+			<PopoverTrigger asChild>
+				<Button
+					variant="outline"
+					data-empty={!selected}
+					className="w-60 justify-start text-start font-normal data-[empty=true]:text-muted-foreground"
+				>
+					{selected ? (
+						format(selected, "MMM d, yyyy")
+					) : (
+						<span>{placeholder}</span>
+					)}
+					<CalendarIcon className="ms-auto h-4 w-4 opacity-50" />
+				</Button>
 			</PopoverTrigger>
 			<PopoverContent className="w-auto p-0">
 				<Calendar

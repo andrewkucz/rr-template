@@ -1,5 +1,5 @@
 import { Loader } from "lucide-react";
-import { FormControl } from "@/components/form";
+import { FormControl } from "@/components/ui/form";
 import {
 	Select,
 	SelectContent,
@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 
 type SelectDropdownProps = {
-	onValueChange?: (value: string | undefined) => void;
+	onValueChange?: (value: string) => void;
 	defaultValue: string | undefined;
 	placeholder?: string;
 	isPending?: boolean;

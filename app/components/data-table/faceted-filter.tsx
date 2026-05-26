@@ -1,3 +1,4 @@
+import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import type { Column } from "@tanstack/react-table";
 import type * as React from "react";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +17,6 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { CheckIcon, PlusCircledIcon } from "@/components/ui/radix-icons";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
@@ -40,46 +40,44 @@ export function DataTableFacetedFilter<TData, TValue>({
 
 	return (
 		<Popover>
-			<PopoverTrigger
-				render={
-					<Button variant="outline" size="sm" className="h-8 border-dashed" />
-				}
-			>
-				<PlusCircledIcon className="size-4" />
-				{title}
-				{selectedValues?.size > 0 && (
-					<>
-						<Separator orientation="vertical" className="mx-2 h-4" />
-						<Badge
-							variant="secondary"
-							className="rounded-sm px-1 font-normal lg:hidden"
-						>
-							{selectedValues.size}
-						</Badge>
-						<div className="hidden space-x-1 lg:flex">
-							{selectedValues.size > 2 ? (
-								<Badge
-									variant="secondary"
-									className="rounded-sm px-1 font-normal"
-								>
-									{selectedValues.size} selected
-								</Badge>
-							) : (
-								options
-									.filter((option) => selectedValues.has(option.value))
-									.map((option) => (
-										<Badge
-											variant="secondary"
-											key={option.value}
-											className="rounded-sm px-1 font-normal"
-										>
-											{option.label}
-										</Badge>
-									))
-							)}
-						</div>
-					</>
-				)}
+			<PopoverTrigger asChild>
+				<Button variant="outline" size="sm" className="h-8 border-dashed">
+					<PlusCircledIcon className="size-4" />
+					{title}
+					{selectedValues?.size > 0 && (
+						<>
+							<Separator orientation="vertical" className="mx-2 h-4" />
+							<Badge
+								variant="secondary"
+								className="rounded-sm px-1 font-normal lg:hidden"
+							>
+								{selectedValues.size}
+							</Badge>
+							<div className="hidden space-x-1 lg:flex">
+								{selectedValues.size > 2 ? (
+									<Badge
+										variant="secondary"
+										className="rounded-sm px-1 font-normal"
+									>
+										{selectedValues.size} selected
+									</Badge>
+								) : (
+									options
+										.filter((option) => selectedValues.has(option.value))
+										.map((option) => (
+											<Badge
+												variant="secondary"
+												key={option.value}
+												className="rounded-sm px-1 font-normal"
+											>
+												{option.label}
+											</Badge>
+										))
+								)}
+							</div>
+						</>
+					)}
+				</Button>
 			</PopoverTrigger>
 			<PopoverContent className="w-50 p-0" align="start">
 				<Command>

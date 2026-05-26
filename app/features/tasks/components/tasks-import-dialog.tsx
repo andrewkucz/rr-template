@@ -1,14 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/form";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -19,14 +11,21 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { showSubmittedData } from "@/lib/show-submitted-data";
 
 const formSchema = z.object({
 	file: z
 		.custom<FileList>(
-			(payload) =>
-				typeof FileList !== "undefined" && payload instanceof FileList,
+			(v) => typeof FileList !== "undefined" && v instanceof FileList,
 		)
 		.refine((files) => files.length > 0, {
 			message: "Please upload a file.",
@@ -56,7 +55,7 @@ export function TasksImportDialog({
 	const onSubmit = () => {
 		const file = form.getValues("file");
 
-		if (file?.[0]) {
+		if (file && file[0]) {
 			const fileDetails = {
 				name: file[0].name,
 				size: file[0].size,
@@ -105,7 +104,9 @@ export function TasksImportDialog({
 					</form>
 				</Form>
 				<DialogFooter className="gap-2">
-					<DialogClose render={<Button variant="outline" />}>Close</DialogClose>
+					<DialogClose asChild>
+						<Button variant="outline">Close</Button>
+					</DialogClose>
 					<Button type="submit" form="task-import-form">
 						Import
 					</Button>

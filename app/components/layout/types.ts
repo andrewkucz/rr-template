@@ -1,3 +1,5 @@
+import type { LinkProps } from "react-router";
+
 type User = {
 	name: string;
 	email: string;
@@ -16,13 +18,16 @@ type BaseNavItem = {
 	icon?: React.ElementType;
 };
 
+// LinkProps["to"] | (string & {});
+type PossibleUrl = string;
+
 type NavLink = BaseNavItem & {
-	url: string;
+	url: PossibleUrl;
 	items?: never;
 };
 
 type NavCollapsible = BaseNavItem & {
-	items: (BaseNavItem & { url: string })[];
+	items: (BaseNavItem & { url: PossibleUrl })[];
 	url?: never;
 };
 

@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { Link } from "react-router";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
@@ -10,8 +11,7 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/components/form";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
 	Select,

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
@@ -10,8 +11,7 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/components/form";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/form";
 import {
 	InputOTP,
 	InputOTPGroup,

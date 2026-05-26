@@ -1,5 +1,4 @@
-import { Radio as Item } from "@base-ui/react/radio";
-import { RadioGroup as Radio } from "@base-ui/react/radio-group";
+import { Item, Root as Radio } from "@radix-ui/react-radio-group";
 import { CircleCheck, RotateCcw, Settings } from "lucide-react";
 import type { SVGProps } from "react";
 import { IconDir } from "@/assets/custom/icon-dir";
@@ -43,19 +42,17 @@ export function ConfigDrawer() {
 
 	return (
 		<Sheet>
-			<SheetTrigger
-				render={
-					<Button
-						size="icon"
-						variant="ghost"
-						aria-label="Open theme settings"
-						className="rounded-full"
-					/>
-				}
-			>
-				<Settings aria-hidden="true" />
+			<SheetTrigger asChild>
+				<Button
+					size="icon"
+					variant="ghost"
+					aria-label="Open theme settings"
+					className="rounded-full"
+				>
+					<Settings aria-hidden="true" />
+				</Button>
 			</SheetTrigger>
-			<SheetContent className="flex flex-col gap-4">
+			<SheetContent className="flex flex-col">
 				<SheetHeader className="pb-0 text-start">
 					<SheetTitle>Theme Settings</SheetTitle>
 					<SheetDescription>
@@ -132,7 +129,7 @@ function RadioGroupItem({
 	isTheme?: boolean;
 }) {
 	return (
-		<Item.Root
+		<Item
 			value={item.value}
 			className={cn("group outline-none", "transition duration-200 ease-in")}
 			aria-label={`Select ${item.label.toLowerCase()}`}
@@ -141,7 +138,7 @@ function RadioGroupItem({
 			<div
 				className={cn(
 					"relative rounded-[6px] ring-[1px] ring-border",
-					"group-data-checked:shadow-2xl group-data-checked:ring-primary",
+					"group-data-[state=checked]:shadow-2xl group-data-[state=checked]:ring-primary",
 					"group-focus-visible:ring-2",
 				)}
 				role="img"
@@ -151,7 +148,7 @@ function RadioGroupItem({
 				<CircleCheck
 					className={cn(
 						"size-6 fill-primary stroke-white",
-						"group-data-unchecked:hidden",
+						"group-data-[state=unchecked]:hidden",
 						"absolute top-0 right-0 translate-x-1/2 -translate-y-1/2",
 					)}
 					aria-hidden="true"
@@ -171,7 +168,7 @@ function RadioGroupItem({
 			>
 				{item.label}
 			</div>
-		</Item.Root>
+		</Item>
 	);
 }
 

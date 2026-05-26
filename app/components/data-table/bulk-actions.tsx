@@ -61,8 +61,8 @@ export function DataTableBulkActions<TData>({
 		const buttons = toolbarRef.current?.querySelectorAll("button");
 		if (!buttons) return;
 
-		const currentIndex = Array.from(buttons).indexOf(
-			document.activeElement as HTMLButtonElement,
+		const currentIndex = Array.from(buttons).findIndex(
+			(button) => button === document.activeElement,
 		);
 
 		switch (event.key) {
@@ -157,20 +157,18 @@ export function DataTableBulkActions<TData>({
 					)}
 				>
 					<Tooltip>
-						<TooltipTrigger
-							render={
-								<Button
-									variant="outline"
-									size="icon"
-									onClick={handleClearSelection}
-									className="size-6 rounded-full"
-									aria-label="Clear selection"
-									title="Clear selection (Escape)"
-								/>
-							}
-						>
-							<X />
-							<span className="sr-only">Clear selection</span>
+						<TooltipTrigger asChild>
+							<Button
+								variant="outline"
+								size="icon"
+								onClick={handleClearSelection}
+								className="size-6 rounded-full"
+								aria-label="Clear selection"
+								title="Clear selection (Escape)"
+							>
+								<X />
+								<span className="sr-only">Clear selection</span>
+							</Button>
 						</TooltipTrigger>
 						<TooltipContent>
 							<p>Clear selection (Escape)</p>

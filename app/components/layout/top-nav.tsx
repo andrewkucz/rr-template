@@ -22,33 +22,29 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
 	return (
 		<>
 			<DropdownMenu modal={false}>
-				<DropdownMenuTrigger
-					render={
-						<Button
-							size="icon"
-							variant="outline"
-							className={cn("md:size-7 lg:hidden", className)}
-						/>
-					}
-				>
-					<Menu />
-					<span className="sr-only">Toggle navigation menu</span>
+				<DropdownMenuTrigger asChild>
+					<Button
+						size="icon"
+						variant="outline"
+						className={cn("md:size-7 lg:hidden", className)}
+					>
+						<Menu />
+						<span className="sr-only">Toggle navigation menu</span>
+					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent side="bottom" align="start">
 					{links.map(({ title, href, isActive, disabled }) => (
 						<DropdownMenuItem
 							key={`${title}-${href}`}
 							disabled={disabled}
-							render={
-								<Link
-									to={href}
-									className={!isActive ? "text-muted-foreground" : ""}
-									aria-disabled={disabled}
-									tabIndex={disabled ? -1 : undefined}
-								/>
-							}
+							asChild
 						>
-							{title}
+							<Link
+								to={href}
+								className={!isActive ? "text-muted-foreground" : ""}
+							>
+								{title}
+							</Link>
 						</DropdownMenuItem>
 					))}
 				</DropdownMenuContent>
@@ -65,9 +61,8 @@ export function TopNav({ className, links, ...props }: TopNavProps) {
 					<Link
 						key={`${title}-${href}`}
 						to={href}
+						// TODO not styled
 						aria-disabled={disabled}
-						tabIndex={disabled ? -1 : undefined}
-						onClick={disabled ? (event) => event.preventDefault() : undefined}
 						className={`text-sm font-medium transition-colors hover:text-primary ${isActive ? "" : "text-muted-foreground"}`}
 					>
 						{title}

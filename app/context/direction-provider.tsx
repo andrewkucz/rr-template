@@ -46,7 +46,7 @@ export function DirectionProvider({ children }: { children: React.ReactNode }) {
 				resetDir,
 			}}
 		>
-			<BaseDirectionProvider direction={dir}>{children}</BaseDirectionProvider>
+			<BaseDirectionProvider dir={dir}>{children}</BaseDirectionProvider>
 		</DirectionContext.Provider>
 	);
 }

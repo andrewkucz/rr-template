@@ -38,13 +38,9 @@ export function Dashboard() {
 						<Button>Download</Button>
 					</div>
 				</div>
-				<Tabs
-					orientation="vertical"
-					defaultValue="overview"
-					className="space-y-4"
-				>
+				<Tabs defaultValue="overview" className="space-y-4">
 					<div className="w-full overflow-x-auto pb-2">
-						<TabsList className="group-data-vertical/tabs:flex-row">
+						<TabsList>
 							<TabsTrigger value="overview">Overview</TabsTrigger>
 							<TabsTrigger value="analytics">Analytics</TabsTrigger>
 							<TabsTrigger value="reports" disabled>
@@ -63,7 +59,6 @@ export function Dashboard() {
 										Total Revenue
 									</CardTitle>
 									<svg
-										aria-hidden="true"
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
 										fill="none"
@@ -89,7 +84,6 @@ export function Dashboard() {
 										Subscriptions
 									</CardTitle>
 									<svg
-										aria-hidden="true"
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
 										fill="none"
@@ -115,7 +109,6 @@ export function Dashboard() {
 								<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
 									<CardTitle className="text-sm font-medium">Sales</CardTitle>
 									<svg
-										aria-hidden="true"
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
 										fill="none"
@@ -142,7 +135,6 @@ export function Dashboard() {
 										Active Now
 									</CardTitle>
 									<svg
-										aria-hidden="true"
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 24 24"
 										fill="none"

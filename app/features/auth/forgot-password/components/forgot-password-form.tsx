@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
@@ -12,8 +13,7 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/components/form";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn, sleep } from "@/lib/utils";
 

@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 import { IconFacebook, IconGithub } from "@/assets/brand-icons";
+import { PasswordInput } from "@/components/password-input";
+import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
@@ -13,9 +15,7 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "@/components/form";
-import { PasswordInput } from "@/components/password-input";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn, sleep } from "@/lib/utils";
 import { useAuthStore } from "@/stores/auth-store";
@@ -73,7 +73,7 @@ export function UserAuthForm({
 
 				// Redirect to the stored location or default to dashboard
 				const targetPath = redirectTo || "/";
-				navigate(targetPath, { replace: true });
+				navigate({ pathname: targetPath }, { replace: true });
 
 				return `Welcome back, ${data.email}!`;
 			},

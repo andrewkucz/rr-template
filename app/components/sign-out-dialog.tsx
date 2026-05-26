@@ -15,10 +15,16 @@ export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
 	const handleSignOut = () => {
 		auth.reset();
 		// Preserve current location for redirect after sign-in
-		const currentPath = `${location.pathname}${location.search}${location.hash}`;
-		navigate(`/sign-in?redirect=${encodeURIComponent(currentPath)}`, {
-			replace: true,
-		});
+		const currentPath = location.pathname;
+		navigate(
+			{
+				pathname: "/sign-in",
+				search: `redirect=${currentPath}`,
+			},
+			{
+				replace: true,
+			},
+		);
 	};
 
 	return (

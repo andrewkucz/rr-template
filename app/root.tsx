@@ -15,7 +15,7 @@ import { FontProvider } from "./context/font-provider";
 import { ThemeProvider } from "./context/theme-provider";
 import { GeneralError } from "./features/errors/general-error";
 import { NotFoundError } from "./features/errors/not-found-error";
-import "./styles/globals.css";
+import "./styles/index.css";
 import { TRPCQueryClientProvider } from "./lib/trpc/provider";
 
 export function meta(args: Route.MetaArgs) {

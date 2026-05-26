@@ -1,29 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigation } from "react-router";
+import LoadingBar, { type LoadingBarRef } from "react-top-loading-bar";
 
 export function NavigationProgress() {
+	const ref = useRef<LoadingBarRef>(null);
 	const navigation = useNavigation();
-	const [progress, setProgress] = useState(0);
-	const isLoading = navigation.state !== "idle";
+	const isNavigating = Boolean(navigation.location);
 
 	useEffect(() => {
-		if (isLoading) {
-			setProgress(80);
+		if (isNavigating) {
+			ref.current?.continuousStart();
 		} else {
-			setProgress(100);
-			const timeout = window.setTimeout(() => setProgress(0), 150);
-			return () => window.clearTimeout(timeout);
+			ref.current?.complete();
 		}
-	}, [isLoading]);
+	}, [isNavigating]);
 
 	return (
-		<div
-			aria-hidden="true"
-			className="pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5 bg-muted-foreground/80 transition-[width,opacity] duration-200"
-			style={{
-				width: `${progress}%`,
-				opacity: progress === 0 ? 0 : 1,
-			}}
+		<LoadingBar
+			color="var(--muted-foreground)"
+			ref={ref}
+			shadow={true}
+			height={2}
 		/>
 	);
 }

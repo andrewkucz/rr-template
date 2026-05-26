@@ -1,5 +1,5 @@
 import type { Row } from "@tanstack/react-table";
-import { Trash2 } from "lucide-react";
+import { Ellipsis, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -14,7 +14,6 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DotsHorizontalIcon } from "@/components/ui/radix-icons";
 import { labels } from "../data/data";
 import { taskSchema } from "../data/schema";
 import { useTasks } from "./tasks-provider";
@@ -32,16 +31,14 @@ export function DataTableRowActions<TData>({
 
 	return (
 		<DropdownMenu modal={false}>
-			<DropdownMenuTrigger
-				render={
-					<Button
-						variant="ghost"
-						className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-					/>
-				}
-			>
-				<DotsHorizontalIcon className="h-4 w-4" />
-				<span className="sr-only">Open menu</span>
+			<DropdownMenuTrigger asChild>
+				<Button
+					variant="ghost"
+					className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+				>
+					<Ellipsis className="h-4 w-4" />
+					<span className="sr-only">Open menu</span>
+				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-40">
 				<DropdownMenuItem

@@ -11,8 +11,8 @@ import { AuthLayout } from "../auth-layout";
 import { UserAuthForm } from "./components/user-auth-form";
 
 export function SignIn() {
-	const [searchParams] = useSearchParams();
-	const redirect = searchParams.get("redirect") ?? undefined;
+	const [search] = useSearchParams();
+	const redirect = search.get("redirect") ?? undefined;
 
 	return (
 		<AuthLayout>

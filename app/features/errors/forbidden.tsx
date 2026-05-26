@@ -13,10 +13,12 @@ export function ForbiddenError() {
 					to view this resource.
 				</p>
 				<div className="mt-6 flex gap-4">
-					<Button variant="outline" onClick={() => navigate(-1)}>
+					<Button variant="outline" onClick={() => navigate("..")}>
 						Go Back
 					</Button>
-					<Button onClick={() => navigate("/")}>Back to Home</Button>
+					<Button onClick={() => navigate({ pathname: "/" })}>
+						Back to Home
+					</Button>
 				</div>
 			</div>
 		</div>

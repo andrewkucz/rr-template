@@ -53,20 +53,18 @@ export function DataTableBulkActions<TData>({
 		<>
 			<BulkActionsToolbar table={table} entityName="user">
 				<Tooltip>
-					<TooltipTrigger
-						render={
-							<Button
-								variant="outline"
-								size="icon"
-								onClick={handleBulkInvite}
-								className="size-8"
-								aria-label="Invite selected users"
-								title="Invite selected users"
-							/>
-						}
-					>
-						<Mail />
-						<span className="sr-only">Invite selected users</span>
+					<TooltipTrigger asChild>
+						<Button
+							variant="outline"
+							size="icon"
+							onClick={handleBulkInvite}
+							className="size-8"
+							aria-label="Invite selected users"
+							title="Invite selected users"
+						>
+							<Mail />
+							<span className="sr-only">Invite selected users</span>
+						</Button>
 					</TooltipTrigger>
 					<TooltipContent>
 						<p>Invite selected users</p>
@@ -74,20 +72,18 @@ export function DataTableBulkActions<TData>({
 				</Tooltip>
 
 				<Tooltip>
-					<TooltipTrigger
-						render={
-							<Button
-								variant="outline"
-								size="icon"
-								onClick={() => handleBulkStatusChange("active")}
-								className="size-8"
-								aria-label="Activate selected users"
-								title="Activate selected users"
-							/>
-						}
-					>
-						<UserCheck />
-						<span className="sr-only">Activate selected users</span>
+					<TooltipTrigger asChild>
+						<Button
+							variant="outline"
+							size="icon"
+							onClick={() => handleBulkStatusChange("active")}
+							className="size-8"
+							aria-label="Activate selected users"
+							title="Activate selected users"
+						>
+							<UserCheck />
+							<span className="sr-only">Activate selected users</span>
+						</Button>
 					</TooltipTrigger>
 					<TooltipContent>
 						<p>Activate selected users</p>
@@ -95,20 +91,18 @@ export function DataTableBulkActions<TData>({
 				</Tooltip>
 
 				<Tooltip>
-					<TooltipTrigger
-						render={
-							<Button
-								variant="outline"
-								size="icon"
-								onClick={() => handleBulkStatusChange("inactive")}
-								className="size-8"
-								aria-label="Deactivate selected users"
-								title="Deactivate selected users"
-							/>
-						}
-					>
-						<UserX />
-						<span className="sr-only">Deactivate selected users</span>
+					<TooltipTrigger asChild>
+						<Button
+							variant="outline"
+							size="icon"
+							onClick={() => handleBulkStatusChange("inactive")}
+							className="size-8"
+							aria-label="Deactivate selected users"
+							title="Deactivate selected users"
+						>
+							<UserX />
+							<span className="sr-only">Deactivate selected users</span>
+						</Button>
 					</TooltipTrigger>
 					<TooltipContent>
 						<p>Deactivate selected users</p>
@@ -116,20 +110,18 @@ export function DataTableBulkActions<TData>({
 				</Tooltip>
 
 				<Tooltip>
-					<TooltipTrigger
-						render={
-							<Button
-								variant="destructive"
-								size="icon"
-								onClick={() => setShowDeleteConfirm(true)}
-								className="size-8"
-								aria-label="Delete selected users"
-								title="Delete selected users"
-							/>
-						}
-					>
-						<Trash2 />
-						<span className="sr-only">Delete selected users</span>
+					<TooltipTrigger asChild>
+						<Button
+							variant="destructive"
+							size="icon"
+							onClick={() => setShowDeleteConfirm(true)}
+							className="size-8"
+							aria-label="Delete selected users"
+							title="Delete selected users"
+						>
+							<Trash2 />
+							<span className="sr-only">Delete selected users</span>
+						</Button>
 					</TooltipTrigger>
 					<TooltipContent>
 						<p>Delete selected users</p>

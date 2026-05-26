@@ -2,14 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { MailPlus, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/form";
 import { SelectDropdown } from "@/components/select-dropdown";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +13,14 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { showSubmittedData } from "@/lib/show-submitted-data";
@@ -137,8 +137,8 @@ export function UsersInviteDialog({
 					</form>
 				</Form>
 				<DialogFooter className="gap-y-2">
-					<DialogClose render={<Button variant="outline" />}>
-						Cancel
+					<DialogClose asChild>
+						<Button variant="outline">Cancel</Button>
 					</DialogClose>
 					<Button type="submit" form="user-invite-form">
 						Invite <Send />
