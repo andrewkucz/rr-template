@@ -55,7 +55,7 @@ export function ConfigDrawer() {
 			>
 				<Settings aria-hidden="true" />
 			</SheetTrigger>
-			<SheetContent className="flex flex-col">
+			<SheetContent className="flex flex-col gap-4">
 				<SheetHeader className="pb-0 text-start">
 					<SheetTitle>Theme Settings</SheetTitle>
 					<SheetDescription>
@@ -141,7 +141,7 @@ function RadioGroupItem({
 			<div
 				className={cn(
 					"relative rounded-[6px] ring-[1px] ring-border",
-					"group-data-[state=checked]:shadow-2xl group-data-[state=checked]:ring-primary",
+					"group-data-checked:shadow-2xl group-data-checked:ring-primary",
 					"group-focus-visible:ring-2",
 				)}
 				role="img"
@@ -151,7 +151,7 @@ function RadioGroupItem({
 				<CircleCheck
 					className={cn(
 						"size-6 fill-primary stroke-white",
-						"group-data-[state=unchecked]:hidden",
+						"group-data-unchecked:hidden",
 						"absolute top-0 right-0 translate-x-1/2 -translate-y-1/2",
 					)}
 					aria-hidden="true"

@@ -2,6 +2,7 @@ import { ArrowRight, ChevronRight, Laptop, Moon, Sun } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router";
 import {
+	Command,
 	CommandDialog,
 	CommandEmpty,
 	CommandGroup,
@@ -30,62 +31,66 @@ export function CommandMenu() {
 
 	return (
 		<CommandDialog modal open={open} onOpenChange={setOpen}>
-			<CommandInput placeholder="Type a command or search..." />
-			<CommandList>
-				<ScrollArea className="h-72 pe-1">
-					<CommandEmpty>No results found.</CommandEmpty>
-					{sidebarData.navGroups.map((group) => (
-						<CommandGroup key={group.title} heading={group.title}>
-							{group.items.map((navItem) => {
-								if (navItem.url)
-									return (
+			<Command>
+				<CommandInput placeholder="Type a command or search..." />
+				<CommandList>
+					<ScrollArea className="h-72 pe-1">
+						<CommandEmpty>No results found.</CommandEmpty>
+						{sidebarData.navGroups.map((group) => (
+							<CommandGroup key={group.title} heading={group.title}>
+								{group.items.map((navItem) => {
+									if (navItem.url)
+										return (
+											<CommandItem
+												key={navItem.url}
+												value={navItem.title}
+												onSelect={() => {
+													runCommand(() => navigate(navItem.url));
+												}}
+											>
+												<div className="flex size-4 items-center justify-center">
+													<ArrowRight className="text-muted-foreground/80" />
+												</div>
+												{navItem.title}
+											</CommandItem>
+										);
+
+									return navItem.items?.map((subItem) => (
 										<CommandItem
-											key={navItem.url}
-											value={navItem.title}
+											key={`${navItem.title}-${subItem.url}`}
+											value={`${navItem.title}-${subItem.url}`}
 											onSelect={() => {
-												runCommand(() => navigate(navItem.url));
+												runCommand(() => navigate(subItem.url));
 											}}
 										>
 											<div className="flex size-4 items-center justify-center">
-												<ArrowRight className="size-2 text-muted-foreground/80" />
+												<ArrowRight className="text-muted-foreground/80" />
 											</div>
-											{navItem.title}
+											{navItem.title} <ChevronRight /> {subItem.title}
 										</CommandItem>
-									);
-
-								return navItem.items?.map((subItem) => (
-									<CommandItem
-										key={`${navItem.title}-${subItem.url}`}
-										value={`${navItem.title}-${subItem.url}`}
-										onSelect={() => {
-											runCommand(() => navigate(subItem.url));
-										}}
-									>
-										<div className="flex size-4 items-center justify-center">
-											<ArrowRight className="size-2 text-muted-foreground/80" />
-										</div>
-										{navItem.title} <ChevronRight /> {subItem.title}
-									</CommandItem>
-								));
-							})}
+									));
+								})}
+							</CommandGroup>
+						))}
+						<CommandSeparator />
+						<CommandGroup heading="Theme">
+							<CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
+								<Sun /> <span>Light</span>
+							</CommandItem>
+							<CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
+								<Moon className="scale-90" />
+								<span>Dark</span>
+							</CommandItem>
+							<CommandItem
+								onSelect={() => runCommand(() => setTheme("system"))}
+							>
+								<Laptop />
+								<span>System</span>
+							</CommandItem>
 						</CommandGroup>
-					))}
-					<CommandSeparator />
-					<CommandGroup heading="Theme">
-						<CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
-							<Sun /> <span>Light</span>
-						</CommandItem>
-						<CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
-							<Moon className="scale-90" />
-							<span>Dark</span>
-						</CommandItem>
-						<CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
-							<Laptop />
-							<span>System</span>
-						</CommandItem>
-					</CommandGroup>
-				</ScrollArea>
-			</CommandList>
+					</ScrollArea>
+				</CommandList>
+			</Command>
 		</CommandDialog>
 	);
 }
