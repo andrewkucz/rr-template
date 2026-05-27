@@ -1,6 +1,6 @@
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import type { Table } from "@tanstack/react-table";
+import { DropdownMenu as BaseDropdownMenu } from "radix-ui";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -19,7 +19,7 @@ export function DataTableViewOptions<TData>({
 }: DataTableViewOptionsProps<TData>) {
 	return (
 		<DropdownMenu modal={false}>
-			<DropdownMenuTrigger asChild>
+			<BaseDropdownMenu.Trigger asChild>
 				<Button
 					variant="outline"
 					size="sm"
@@ -28,7 +28,7 @@ export function DataTableViewOptions<TData>({
 					<MixerHorizontalIcon className="size-4" />
 					View
 				</Button>
-			</DropdownMenuTrigger>
+			</BaseDropdownMenu.Trigger>
 			<DropdownMenuContent align="end" className="w-37.5">
 				<DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
 				<DropdownMenuSeparator />

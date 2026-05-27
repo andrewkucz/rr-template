@@ -1,5 +1,5 @@
-import { Item, Root as Radio } from "@radix-ui/react-radio-group";
 import { CircleCheck, RotateCcw, Settings } from "lucide-react";
+import { RadioGroup } from "radix-ui";
 import type { SVGProps } from "react";
 import { IconDir } from "@/assets/custom/icon-dir";
 import { IconLayoutCompact } from "@/assets/custom/icon-layout-compact";
@@ -129,7 +129,7 @@ function RadioGroupItem({
 	isTheme?: boolean;
 }) {
 	return (
-		<Item
+		<RadioGroup.Item
 			value={item.value}
 			className={cn("group outline-none", "transition duration-200 ease-in")}
 			aria-label={`Select ${item.label.toLowerCase()}`}
@@ -168,7 +168,7 @@ function RadioGroupItem({
 			>
 				{item.label}
 			</div>
-		</Item>
+		</RadioGroup.Item>
 	);
 }
 
@@ -182,7 +182,7 @@ function ThemeConfig() {
 				onReset={() => setTheme(defaultTheme)}
 				resetAriaLabel="Reset theme preference to default"
 			/>
-			<Radio
+			<RadioGroup.Root
 				value={theme}
 				onValueChange={setTheme}
 				className="grid w-full max-w-md grid-cols-3 gap-4"
@@ -208,7 +208,7 @@ function ThemeConfig() {
 				].map((item) => (
 					<RadioGroupItem key={item.value} item={item} isTheme />
 				))}
-			</Radio>
+			</RadioGroup.Root>
 			<div id="theme-description" className="sr-only">
 				Choose between system preference, light mode, or dark mode
 			</div>
@@ -226,7 +226,7 @@ function SidebarConfig() {
 				onReset={() => setVariant(defaultVariant)}
 				resetAriaLabel="Reset sidebar style to default"
 			/>
-			<Radio
+			<RadioGroup.Root
 				value={variant}
 				onValueChange={setVariant}
 				className="grid w-full max-w-md grid-cols-3 gap-4"
@@ -252,7 +252,7 @@ function SidebarConfig() {
 				].map((item) => (
 					<RadioGroupItem key={item.value} item={item} />
 				))}
-			</Radio>
+			</RadioGroup.Root>
 			<div id="sidebar-description" className="sr-only">
 				Choose between inset, floating, or standard sidebar layout
 			</div>
@@ -277,7 +277,7 @@ function LayoutConfig() {
 				}}
 				resetAriaLabel="Reset layout options to default"
 			/>
-			<Radio
+			<RadioGroup.Root
 				value={radioState}
 				onValueChange={(v) => {
 					if (v === "default") {
@@ -310,7 +310,7 @@ function LayoutConfig() {
 				].map((item) => (
 					<RadioGroupItem key={item.value} item={item} />
 				))}
-			</Radio>
+			</RadioGroup.Root>
 			<div id="layout-description" className="sr-only">
 				Choose between default expanded, compact icon-only, or full layout mode
 			</div>
@@ -328,7 +328,7 @@ function DirConfig() {
 				onReset={() => setDir(defaultDir)}
 				resetAriaLabel="Reset text direction to default"
 			/>
-			<Radio
+			<RadioGroup.Root
 				value={dir}
 				onValueChange={setDir}
 				className="grid w-full max-w-md grid-cols-3 gap-4"
@@ -353,7 +353,7 @@ function DirConfig() {
 				].map((item) => (
 					<RadioGroupItem key={item.value} item={item} />
 				))}
-			</Radio>
+			</RadioGroup.Root>
 			<div id="direction-description" className="sr-only">
 				Choose between left-to-right or right-to-left site direction
 			</div>

@@ -4,6 +4,7 @@ Adapted from: https://github.com/satnaing/shadcn-admin
 
 - Tanstack Router -> React Router v7
 - Clerk -> Better Auth
+- ESLint + Prettier -> Biome
 - + TRPC
 - + DrizzleORM (Postgres)
 
@@ -20,9 +21,10 @@ Adapted from: https://github.com/satnaing/shadcn-admin
 
 Also included:
 
-- [nuqs](https://nuqs.dev/)
+- [biome](https://biomejs.dev/guides/getting-started/) | formatting and linting
+- [nuqs](https://nuqs.dev/) | url query param management
+- [@tanstack/table](https://tanstack.com/table/latest) | headless table ui
 - [@daveyplate/better-auth-tanstack](https://github.com/daveyplate/better-auth-tanstack) | better-auth + @tanstack/react-query helpers
-- [@tanstack/table]() |
 
 
 ## TODO
