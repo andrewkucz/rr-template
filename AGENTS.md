@@ -1,4 +1,12 @@
-# AGENTS.md
+<!-- intent-skills:start -->
+## Skill Loading
+
+Before substantial work:
+- Skill check: run `npx @tanstack/intent@latest list`, or use skills already listed in context.
+- Skill guidance: if one local skill clearly matches the task, run `npx @tanstack/intent@latest load <package>#<skill>` and follow the returned `SKILL.md`.
+- Monorepos: when working across packages, run the skill check from the workspace root and prefer the local skill for the package being changed.
+- Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
+<!-- intent-skills:end -->
 
 ## Stack
 
@@ -30,7 +38,7 @@ app/
   root.tsx              # app shell; wraps everything in TRPCQueryClientProvider
   routes.ts             # route config via `flatRoutes()` from `@react-router/fs-routes`
   routes/               # file-based route modules (for example `_index.tsx`, `api.trpc.$.ts`)
-  features/<feature>/   # feature-scoped code; each feature has a router.ts
+  features/<feature>/   # feature-scoped code; each feature may have a router.ts for its trpc procedures
   lib/
     trpc/               # tRPC setup (server, client, provider, auth-plugin)
     auth/               # Better Auth setup (server, browser, utils)
@@ -70,7 +78,8 @@ const mutation = useMutation(trpc.<router>.<procedure>.mutationOptions());
 - Both are in `@/lib/auth/server-utils`
 
 **Client-side:**
-- `authClient` and `useSession` from `@/lib/auth/browser`
+- `authClient` from `@/lib/auth/browser`
+- `useSession` from `@/lib/auth/hooks`
 
 Auth tables are generated — run `npm run gen:auth` after changing `app/lib/auth/server.ts`, then `npm run db:push` or `db:migrate`.
 
