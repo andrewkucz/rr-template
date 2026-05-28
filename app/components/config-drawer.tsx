@@ -24,6 +24,7 @@ import {
 import { useDirection } from "@/context/direction-provider";
 import { type Collapsible, useLayout } from "@/context/layout-provider";
 import { useTheme } from "@/context/theme-provider";
+import { DEFAULT_THEME } from "@/lib/theme/utils";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "./ui/sidebar";
 
@@ -173,13 +174,13 @@ function RadioGroupItem({
 }
 
 function ThemeConfig() {
-	const { defaultTheme, theme, setTheme } = useTheme();
+	const { resetTheme, theme, setTheme } = useTheme();
 	return (
 		<div>
 			<SectionTitle
 				title="Theme"
-				showReset={theme !== defaultTheme}
-				onReset={() => setTheme(defaultTheme)}
+				showReset={theme !== DEFAULT_THEME}
+				onReset={resetTheme}
 				resetAriaLabel="Reset theme preference to default"
 			/>
 			<RadioGroup.Root

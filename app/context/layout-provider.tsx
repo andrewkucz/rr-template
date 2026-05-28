@@ -10,8 +10,8 @@ const LAYOUT_VARIANT_COOKIE_NAME = "layout_variant";
 const LAYOUT_COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
 // Default values
-const DEFAULT_VARIANT = "inset";
-const DEFAULT_COLLAPSIBLE = "icon";
+const DEFAULT_VARIANT: Variant = "inset";
+const DEFAULT_COLLAPSIBLE: Collapsible = "icon";
 
 type LayoutContextType = {
 	resetLayout: () => void;
@@ -33,13 +33,16 @@ type LayoutProviderProps = {
 
 export function LayoutProvider({ children }: LayoutProviderProps) {
 	const [collapsible, _setCollapsible] = useState<Collapsible>(() => {
-		const saved = getCookie(LAYOUT_COLLAPSIBLE_COOKIE_NAME);
-		return (saved as Collapsible) || DEFAULT_COLLAPSIBLE;
+		const saved = getCookie(
+			LAYOUT_COLLAPSIBLE_COOKIE_NAME,
+			DEFAULT_COLLAPSIBLE,
+		);
+		return saved;
 	});
 
 	const [variant, _setVariant] = useState<Variant>(() => {
-		const saved = getCookie(LAYOUT_VARIANT_COOKIE_NAME);
-		return (saved as Variant) || DEFAULT_VARIANT;
+		const saved = getCookie(LAYOUT_VARIANT_COOKIE_NAME, DEFAULT_VARIANT);
+		return saved;
 	});
 
 	const setCollapsible = (newCollapsible: Collapsible) => {

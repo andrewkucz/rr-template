@@ -9,32 +9,33 @@ const DEFAULT_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 /**
  * Get a cookie value by name
  */
-export function getCookie(name: string): string | undefined {
-	if (typeof document === "undefined") return undefined;
+export function getCookie<T>(name: string, fallback: T): T {
+	if (typeof document === "undefined") return fallback;
 
 	const value = `; ${document.cookie}`;
 	const parts = value.split(`; ${name}=`);
 	if (parts.length === 2) {
 		const cookieValue = parts.pop()?.split(";").shift();
-		return cookieValue;
+		return cookieValue as T;
 	}
-	return undefined;
+	return fallback;
 }
 
-export function getCookieFromReq(
+export function getCookieFromReq<T>(
 	request: Request,
 	name: string,
-): string | undefined {
+	fallback: T,
+): T {
 	const cookie = request.headers.get("cookie");
-	if (!cookie) return undefined;
+	if (!cookie) return fallback;
 
 	const value = `; ${cookie}`;
 	const parts = value.split(`; ${name}=`);
 	if (parts.length === 2) {
 		const cookieValue = parts.pop()?.split(";").shift();
-		return cookieValue;
+		return cookieValue as T;
 	}
-	return undefined;
+	return fallback;
 }
 
 /**

@@ -1,22 +1,27 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { prefersLightMQ } from "@/components/layout/theme-script";
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
+
 import { getCookie, removeCookie, setCookie } from "@/lib/cookies";
-
-export type Theme = "dark" | "light" | "system";
-type ResolvedTheme = Exclude<Theme, "system">;
-
-const DEFAULT_THEME = "system";
-export const THEME_COOKIE_NAME = "vite-ui-theme";
-const THEME_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
+import {
+	DEFAULT_THEME,
+	PREFERS_LIGHT_MEDIA_QUERY,
+	type ResolvedTheme,
+	THEME_COOKIE_MAX_AGE,
+	THEME_COOKIE_NAME,
+	type Theme,
+} from "@/lib/theme/utils";
 
 type ThemeProviderProps = {
 	children: React.ReactNode;
-	defaultTheme?: Theme;
-	storageKey?: string;
 };
 
 type ThemeProviderState = {
-	defaultTheme: Theme;
 	resolvedTheme: ResolvedTheme;
 	theme: Theme;
 	setTheme: (theme: Theme) => void;
@@ -24,7 +29,6 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-	defaultTheme: DEFAULT_THEME,
 	resolvedTheme: "light",
 	theme: DEFAULT_THEME,
 	setTheme: () => null,
@@ -33,27 +37,24 @@ const initialState: ThemeProviderState = {
 
 const ThemeContext = createContext<ThemeProviderState>(initialState);
 
-export function ThemeProvider({
-	children,
-	defaultTheme = DEFAULT_THEME,
-	storageKey = THEME_COOKIE_NAME,
-	...props
-}: ThemeProviderProps) {
-	const [theme, _setTheme] = useState<Theme>(
-		() => (getCookie(storageKey) as Theme) || defaultTheme,
+export function ThemeProvider({ children }: ThemeProviderProps) {
+	const [theme, _setTheme] = useState(() =>
+		getCookie(THEME_COOKIE_NAME, DEFAULT_THEME),
 	);
 
 	// Optimized: Memoize the resolved theme calculation to prevent unnecessary re-computations
 	const resolvedTheme = useMemo((): ResolvedTheme => {
 		if (theme === "system" && typeof window !== "undefined") {
-			return window.matchMedia(prefersLightMQ).matches ? "dark" : "light";
+			return window.matchMedia(PREFERS_LIGHT_MEDIA_QUERY).matches
+				? "light"
+				: "dark";
 		}
 		return theme as ResolvedTheme;
 	}, [theme]);
 
 	useEffect(() => {
 		const root = window.document.documentElement;
-		const mediaQuery = window.matchMedia(prefersLightMQ);
+		const mediaQuery = window.matchMedia(PREFERS_LIGHT_MEDIA_QUERY);
 
 		const applyTheme = (currentResolvedTheme: ResolvedTheme) => {
 			root.classList.remove("light", "dark"); // Remove existing theme classes
@@ -74,29 +75,27 @@ export function ThemeProvider({
 		return () => mediaQuery.removeEventListener("change", handleChange);
 	}, [theme, resolvedTheme]);
 
-	const setTheme = (theme: Theme) => {
-		setCookie(storageKey, theme, THEME_COOKIE_MAX_AGE);
+	const setTheme = useCallback((theme: Theme) => {
+		setCookie(THEME_COOKIE_NAME, theme, THEME_COOKIE_MAX_AGE);
 		_setTheme(theme);
-	};
+	}, []);
 
-	const resetTheme = () => {
-		removeCookie(storageKey);
+	const resetTheme = useCallback(() => {
+		removeCookie(THEME_COOKIE_NAME);
 		_setTheme(DEFAULT_THEME);
-	};
+	}, []);
 
-	const contextValue = {
-		defaultTheme,
-		resolvedTheme,
-		resetTheme,
-		theme,
-		setTheme,
-	};
-
-	return (
-		<ThemeContext value={contextValue} {...props}>
-			{children}
-		</ThemeContext>
+	const contextValue = useMemo(
+		() => ({
+			resolvedTheme,
+			resetTheme,
+			theme,
+			setTheme,
+		}),
+		[resolvedTheme, resetTheme, theme, setTheme],
 	);
+
+	return <ThemeContext value={contextValue}>{children}</ThemeContext>;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

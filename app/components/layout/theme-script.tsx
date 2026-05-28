@@ -1,8 +1,8 @@
-export const prefersLightMQ = "(prefers-color-scheme: light)";
+import { PREFERS_LIGHT_MEDIA_QUERY, type Theme } from "@/lib/theme/utils";
 
 const clientThemeCode = `
 (() => {
-  const theme = window.matchMedia("${prefersLightMQ}").matches
+  const theme = window.matchMedia("${PREFERS_LIGHT_MEDIA_QUERY}").matches
     ? 'light'
     : 'dark';
   
@@ -34,15 +34,22 @@ const clientThemeCode = `
 
 type ThemeScriptProps = {
 	nonce?: string;
+	theme: Theme;
 };
 
-export function ThemeScript({ nonce }: ThemeScriptProps) {
+export function ThemeScript({ nonce, theme }: ThemeScriptProps) {
 	return (
-		<script
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: okay for client theme code
-			dangerouslySetInnerHTML={{ __html: clientThemeCode }}
-			nonce={nonce}
-			suppressHydrationWarning
-		/>
+		<>
+			<meta
+				name="color-scheme"
+				content={theme === "dark" ? "dark light" : "light dark"}
+			/>
+			<script
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: okay for client theme code
+				dangerouslySetInnerHTML={{ __html: clientThemeCode }}
+				nonce={nonce}
+				suppressHydrationWarning
+			/>
+		</>
 	);
 }

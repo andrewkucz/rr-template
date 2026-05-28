@@ -4,7 +4,7 @@ import { getCookie, removeCookie, setCookie } from "@/lib/cookies";
 
 export type Direction = "ltr" | "rtl";
 
-const DEFAULT_DIRECTION = "ltr";
+const DEFAULT_DIRECTION: Direction = "ltr";
 const DIRECTION_COOKIE_NAME = "dir";
 const DIRECTION_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
@@ -18,8 +18,8 @@ type DirectionContextType = {
 const DirectionContext = createContext<DirectionContextType | null>(null);
 
 export function DirectionProvider({ children }: { children: React.ReactNode }) {
-	const [dir, _setDir] = useState<Direction>(
-		() => (getCookie(DIRECTION_COOKIE_NAME) as Direction) || DEFAULT_DIRECTION,
+	const [dir, _setDir] = useState(() =>
+		getCookie(DIRECTION_COOKIE_NAME, DEFAULT_DIRECTION),
 	);
 
 	useEffect(() => {

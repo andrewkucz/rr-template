@@ -13,11 +13,7 @@ import { NavigationProgress } from "./components/navigation-progress";
 import { Toaster } from "./components/ui/sonner";
 import { DirectionProvider } from "./context/direction-provider";
 import { FontProvider } from "./context/font-provider";
-import {
-	THEME_COOKIE_NAME,
-	type Theme,
-	ThemeProvider,
-} from "./context/theme-provider";
+import { ThemeProvider } from "./context/theme-provider";
 import { GeneralError } from "./features/errors/general-error";
 import { NotFoundError } from "./features/errors/not-found-error";
 import "./styles/index.css";
@@ -25,6 +21,7 @@ import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import { ThemeScript } from "@/components/layout/theme-script";
 import AuthProvider from "./lib/auth/provider";
 import { getCookieFromReq } from "./lib/cookies";
+import { DEFAULT_THEME, THEME_COOKIE_NAME } from "./lib/theme/utils";
 import { TRPCQueryClientProvider } from "./lib/trpc/provider";
 
 export function meta(args: Route.MetaArgs) {
@@ -45,33 +42,23 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export const loader = ({ request }: Route.LoaderArgs) => {
-	const defaultTheme = getCookieFromReq(request, THEME_COOKIE_NAME) as
-		| Theme
-		| undefined;
+	const theme = getCookieFromReq(request, THEME_COOKIE_NAME, DEFAULT_THEME);
+
 	return {
-		defaultTheme,
+		theme,
 	};
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
-	const data = useLoaderData<typeof loader>();
+	const { theme } = useLoaderData<typeof loader>();
 
 	return (
-		<html
-			lang="en"
-			className={
-				data && data?.defaultTheme !== "system" ? data.defaultTheme : ""
-			}
-		>
+		<html lang="en" className={theme} suppressHydrationWarning>
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<Meta />
-				<meta
-					name="color-scheme"
-					content={data?.defaultTheme === "dark" ? "dark light" : "light dark"}
-				/>
-				<ThemeScript />
+				<ThemeScript theme={theme} />
 				<Links />
 			</head>
 			<body>
