@@ -1,6 +1,7 @@
 {
-	"name": "rr-template",
-	"private": true,
+	"name": "react-router-shadcn-admin",
+	"private": false,
+	"version": "2.0.0",
 	"type": "module",
 	"scripts": {
 		"build": "react-router build",

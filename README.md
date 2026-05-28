@@ -12,12 +12,13 @@ Adapted from: https://github.com/satnaing/shadcn-admin
 
 - React Router
 - Shadcn UI
- - Tailwind CSS
- - Radix UI
+  - Tailwind CSS
+  - Radix UI
 - Drizzle ORM
   - Postgres
 - Better Auth
 - tRPC
+  - React Query 
 
 Also included:
 
