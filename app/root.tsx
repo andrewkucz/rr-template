@@ -25,7 +25,14 @@ import { DEFAULT_THEME, THEME_COOKIE_NAME } from "./lib/theme/utils";
 import { TRPCQueryClientProvider } from "./lib/trpc/provider";
 
 export function meta(args: Route.MetaArgs) {
-	return [{ title: "Shadcn Admin Remix" }];
+	return [
+		{ title: "Shadcn Admin Remix" },
+		{
+			name: "description",
+			content: "Admin Dashboard UI built with Shadcn and React Router.",
+		},
+		{ name: "apple-mobile-web-app-title", content: "Admin" },
+	];
 }
 
 export const links: Route.LinksFunction = () => [
@@ -38,6 +45,30 @@ export const links: Route.LinksFunction = () => [
 	{
 		rel: "stylesheet",
 		href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+	},
+	{
+		rel: "icon",
+		type: "image/png",
+		sizes: "96x96",
+		href: "/favicon-96x96.png",
+	},
+	{
+		rel: "icon",
+		type: "image/svg+xml",
+		href: "/favicon.svg",
+	},
+	{
+		rel: "shortcut icon",
+		href: "/favicon.ico",
+	},
+	{
+		rel: "apple-touch-icon",
+		sizes: "180x180",
+		href: "/apple-touch-icon.png",
+	},
+	{
+		rel: "manifest",
+		href: "/site.webmanifest",
 	},
 ];
 
