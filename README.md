@@ -44,8 +44,8 @@ npx drizzle-kit push
 To reset the local database entirely (wipes all data):
 
 ```bash
-docker compose down --volumes
-docker compose up -d
+docker compose -f docker-compose.dev.yml down --volumes
+docker compose -f docker-compose.dev.yml up -d
 sleep 5
 npx drizzle-kit migrate
 ```
