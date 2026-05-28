@@ -26,7 +26,7 @@ import { TRPCQueryClientProvider } from "./lib/trpc/provider";
 
 export function meta(args: Route.MetaArgs) {
 	return [
-		{ title: "Shadcn Admin Remix" },
+		{ title: "Shadcn Admin React Router" },
 		{
 			name: "description",
 			content: "Admin Dashboard UI built with Shadcn and React Router.",

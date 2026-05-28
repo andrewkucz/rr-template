@@ -1,4 +1,4 @@
-# Shadcn Admin Template (the remix)
+# Shadcn Admin React Router Template
 
 Adapted from: https://github.com/satnaing/shadcn-admin
 
