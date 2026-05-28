@@ -10,7 +10,7 @@ Before substantial work:
 
 ## Stack
 
-React Router v7 (framework mode) · tRPC v11 · TanStack React Query v5 · Better Auth · Drizzle ORM (PostgreSQL) · nuqs · shadcn/BaseUI · Tailwind CSS v4 · Biome · TypeScript
+React Router v7 (framework mode) · tRPC v11 · TanStack React Query v5 · Better Auth · Drizzle ORM (PostgreSQL) · nuqs · shadcn/radix · Tailwind CSS v4 · Biome · TypeScript
 
 ## Commands
 
