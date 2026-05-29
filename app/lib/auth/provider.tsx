@@ -12,6 +12,7 @@ export default function AuthProvider({
 	return (
 		<BetterAuthUIProvider
 			authClient={authClient}
+			basePaths={{ auth: "" }}
 			redirectTo="/settings/account"
 			socialProviders={["github"]}
 			navigate={navigate}
