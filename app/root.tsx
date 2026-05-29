@@ -5,7 +5,7 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-	useLoaderData,
+	useRouteLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -81,7 +81,8 @@ export const loader = ({ request }: Route.LoaderArgs) => {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
-	const { theme } = useLoaderData<typeof loader>();
+	const data = useRouteLoaderData<typeof loader>("root");
+	const theme = data?.theme ?? DEFAULT_THEME;
 	const className = theme !== "system" ? theme : undefined;
 
 	return (
