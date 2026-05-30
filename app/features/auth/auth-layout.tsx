@@ -1,8 +1,7 @@
-import { Outlet } from "react-router";
 import { Logo } from "@/assets/logo";
 
 type AuthLayoutProps = {
-	children?: React.ReactNode;
+	children: React.ReactNode;
 };
 
 export function AuthLayout({ children }: AuthLayoutProps) {
@@ -13,7 +12,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 					<Logo className="me-2" />
 					<h1 className="text-xl font-medium">Shadcn Admin</h1>
 				</div>
-				{children ?? <Outlet />}
+				{children}
 			</div>
 		</div>
 	);

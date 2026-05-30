@@ -38,16 +38,16 @@ There are no tests.
 
 ```
 app/
-  root.tsx              # app shell; mounts NuqsAdapter, TRPCQueryClientProvider, Better Auth UI provider, and UI providers
+  root.tsx              # app shell; mounts NuqsAdapter, TRPCQueryClientProvider, auth, and UI providers
   routes.ts             # route config via `flatRoutes()`
-  routes/               # file-based route modules (for example `_authenticated.tsx`, `_auth.tsx`, `api.trpc.$.ts`)
+  routes/               # file-based route modules (for example `_authenticated.tsx`, `api.trpc.$.ts`)
   features/<feature>/   # feature-scoped UI/data modules; server procedures live here when needed
-  components/           # shared UI, auth views, layouts, and data-table building blocks
+  components/           # shared UI, layouts, and data-table building blocks
   hooks/                # reusable React hooks, including nuqs-backed table state
   context/              # theme, font, direction, layout, and search providers
   lib/
     trpc/               # tRPC setup (server, client, query client, provider, auth plugin)
-    auth/               # Better Auth server/client setup and Better Auth UI provider wiring
+    auth/               # Better Auth setup (server, browser, hooks, provider, server utils)
   db/
     index.ts            # drizzle db instance (DATABASE_URL)
     schema.ts           # app tables
@@ -87,15 +87,13 @@ const mutation = useMutation(trpc.<router>.<procedure>.mutationOptions());
 ## Auth Conventions
 
 **Server-side** (loaders/actions):
-- Use `ensureSession(queryClient, auth, { headers: request.headers })` from `@better-auth-ui/react/server`
-- Protected loaders redirect unauthenticated users to `/sign-in?redirectTo=<current-path>`
-- The Better Auth server instance lives in `@/lib/auth/server`
+- `requireAuth(request)` — redirects to `/sign-in` if unauthenticated; returns `userId`
+- `getUser(request)` — returns user object or `null`; never throws
+- Both are in `@/lib/auth/server-utils`
 
 **Client-side:**
 - `authClient` from `@/lib/auth/browser`
-- `AuthProvider` from `@/lib/auth/provider` is mounted in `app/root.tsx`
-- `useSession(authClient)` comes from `@better-auth-ui/react`
-- Public auth pages render Better Auth UI components from `app/components/auth/`
+- `useSession` from `@/lib/auth/hooks`
 
 Auth tables are generated. After changing `app/lib/auth/server.ts`, run `npm run gen:auth`. Only generate and apply a migration when the user explicitly asks for schema changes to be committed.
 
@@ -111,14 +109,7 @@ Auth tables are generated. After changing `app/lib/auth/server.ts`, run `npm run
 
 Routes are discovered from `app/routes/` via file-based routing using `flatRoutes()` in `app/routes.ts`.
 
-The route tree uses underscore-prefixed layout/group files such as `_authenticated.tsx` and `_auth.tsx`, with nested routes like `_authenticated.settings.account.tsx` and `_auth.sign-in.tsx`. Follow the existing file-route naming pattern when adding pages.
-
-The public auth flow lives in the `_auth` layout route and its child routes:
-- `_auth.sign-in.tsx`
-- `_auth.sign-up.tsx`
-- `_auth.forgot-password.tsx`
-- `_auth.reset-password.tsx`
-- `_auth.sign-out.tsx`
+The route tree currently uses underscore-prefixed layout/group files such as `_authenticated.tsx` and nested settings routes like `_authenticated.settings.account.tsx`. Follow the existing file-route naming pattern when adding pages.
 
 Follow React Router's file-route conventions: https://reactrouter.com/how-to/file-route-conventions
 

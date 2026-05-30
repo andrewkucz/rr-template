@@ -40,9 +40,9 @@ export function makeQueryClient() {
 
 				if (error.response?.status === 401) {
 					toast.error("Session expired!");
-					const redirectTo = window.location.pathname + window.location.search;
+					const redirect = window.location.pathname + window.location.search;
 					window.location.assign(
-						`/sign-in?${new URLSearchParams({ redirectTo }).toString()}`,
+						`/sign-in?${new URLSearchParams({ redirect }).toString()}`,
 					);
 				}
 

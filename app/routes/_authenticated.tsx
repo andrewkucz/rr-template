@@ -14,12 +14,9 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	});
 
 	if (!session) {
-		const url = new URL(request.url);
-		const currentPath = `${url.pathname}${url.search}`;
+		const currentPath = new URL(request.url).pathname;
 		const redirectPath =
-			currentPath && currentPath !== "/"
-				? `?${new URLSearchParams({ redirectTo: currentPath }).toString()}`
-				: "";
+			currentPath && currentPath !== "/" ? `?redirect=${currentPath}` : "";
 
 		throw redirect(`/sign-in${redirectPath}`);
 	}

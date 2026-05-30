@@ -14,11 +14,11 @@ export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
 
 	const { mutate: signOut } = useSignOut(authClient, {
 		onSuccess: () => {
-			const redirectTo = location.pathname + location.search;
+			const currentPath = location.pathname;
 			navigate(
 				{
 					pathname: "/sign-in",
-					search: new URLSearchParams({ redirectTo }).toString(),
+					search: `redirect=${currentPath}`,
 				},
 				{
 					replace: true,
