@@ -16,7 +16,7 @@
 		"db:migrate": "drizzle-kit migrate",
 		"db:studio": "drizzle-kit studio",
 		"gen:auth": "npx @better-auth/cli generate --yes --output=./app/db/auth.schema.ts --config=./app/lib/auth/server.ts",
-		"knip": "knip"
+		"knip": "SKIP_ENV_VALIDATION=1 NODE_OPTIONS=\"--import tsx\" knip"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.5.0",
@@ -29,7 +29,6 @@
 		"@react-router/node": "^7.16.0",
 		"@react-router/serve": "^7.16.0",
 		"@t3-oss/env-core": "^0.13.11",
-		"@tanstack/react-pacer": "^0.22.1",
 		"@tanstack/react-query": "^5.100.14",
 		"@tanstack/react-table": "^8.21.3",
 		"@trpc/client": "^11.17.0",
