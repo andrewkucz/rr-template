@@ -11,9 +11,7 @@ import {
 import type { Route } from "./+types/root";
 import { NavigationProgress } from "./components/navigation-progress";
 import { Toaster } from "./components/ui/sonner";
-import { DEFAULT_FONT, FONT_COOKIE_NAME, isFont } from "./config/fonts";
 import { DirectionProvider } from "./context/direction-provider";
-import { FontProvider } from "./context/font-provider";
 import { ThemeProvider } from "./context/theme-provider";
 import { GeneralError } from "./features/errors/general-error";
 import { NotFoundError } from "./features/errors/not-found-error";
@@ -46,7 +44,7 @@ export const links: Route.LinksFunction = () => [
 	},
 	{
 		rel: "stylesheet",
-		href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=optional",
+		href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
 	},
 	{
 		rel: "icon",
@@ -76,32 +74,18 @@ export const links: Route.LinksFunction = () => [
 
 export const loader = ({ request }: Route.LoaderArgs) => {
 	const theme = getCookieFromReq(request, THEME_COOKIE_NAME, DEFAULT_THEME);
-	const savedFont = getCookieFromReq(request, FONT_COOKIE_NAME, DEFAULT_FONT);
-	const font = isFont(savedFont) ? savedFont : DEFAULT_FONT;
 
 	return {
-		font,
 		theme,
 	};
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	const data = useRouteLoaderData<typeof loader>("root");
-	const font = data?.font ?? DEFAULT_FONT;
 	const theme = data?.theme ?? DEFAULT_THEME;
-	const className = [
-		font !== "system" ? `font-${font}` : undefined,
-		theme !== "system" ? theme : undefined,
-	]
-		.filter(Boolean)
-		.join(" ");
 
 	return (
-		<html
-			lang="en"
-			className={className.length > 0 ? className : undefined}
-			suppressHydrationWarning
-		>
+		<html lang="en" className={theme} suppressHydrationWarning>
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -113,15 +97,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<NuqsAdapter>
 					<TRPCQueryClientProvider>
 						<ThemeProvider>
-							<FontProvider initialFont={font}>
-								<DirectionProvider>
-									<NavigationProgress />
-									{children}
-									<Toaster duration={5000} />
-								</DirectionProvider>
-							</FontProvider>
+							<DirectionProvider>
+								<NavigationProgress />
+								{children}
+								<Toaster duration={5000} />
+							</DirectionProvider>
 						</ThemeProvider>
-						w{" "}
 					</TRPCQueryClientProvider>
 				</NuqsAdapter>
 				<ScrollRestoration />
