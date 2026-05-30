@@ -1,7 +1,7 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-	ignore: ["app/components/ui/**", "app/components/layout/app-title.tsx"],
+	ignore: ["app/components/ui/**"],
 };
 
 export default config;
