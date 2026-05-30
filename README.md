@@ -24,6 +24,7 @@ Also included:
 
 - [biome](https://biomejs.dev/guides/getting-started/) | formatting and linting
 - [nuqs](https://nuqs.dev/) | url query param management
+- [@t3-oss/env-core](https://env.t3.gg/docs/introduction) | env validation
 - [@tanstack/table](https://tanstack.com/table/latest) | headless table ui
 - [@better-auth-ui/react](https://better-auth-ui.com/) | better auth helpers 
 

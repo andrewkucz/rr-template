@@ -76,6 +76,8 @@ const mutation = useMutation(trpc.<router>.<procedure>.mutationOptions());
 
 `useTRPC` and `TRPCProvider`/`useTRPCClient` are exported from `@/lib/trpc/client`. The app-wide React Query and tRPC wiring lives in `app/lib/trpc/provider.tsx`.
 
+Prefer React Query's built-in lifecycle callbacks for side effects: use `onSuccess`, `onError`, and related options on the query or mutation when needed instead of ad hoc effect/state wiring. Derive UI state directly from the `useQuery`/`useMutation` result wherever possible rather than copying server state into additional `useState`.
+
 ## URL State Conventions
 
 - `nuqs` is the standard library for URL query param state management in client components
@@ -86,14 +88,11 @@ const mutation = useMutation(trpc.<router>.<procedure>.mutationOptions());
 
 ## Auth Conventions
 
-**Server-side** (loaders/actions):
-- `requireAuth(request)` — redirects to `/sign-in` if unauthenticated; returns `userId`
-- `getUser(request)` — returns user object or `null`; never throws
-- Both are in `@/lib/auth/server-utils`
+- always use better-auth recommended conventions (docs: https://better-auth.com/llms.txt)
 
-**Client-side:**
-- `authClient` from `@/lib/auth/browser`
-- helper hooks exported from `@better-auth-ui/react` library (docs: https://better-auth-ui.com/llms.txt)
+- server-side: `auth` exported from `@/lib/auth/server`
+- client-side: `authClient` from `@/lib/auth/browser`
+- for client-side query and mutation hooks, and server-side helpers see library `@better-auth-ui/react` (docs: https://better-auth-ui.com/llms.txt)
 
 Auth tables are generated. After changing `app/lib/auth/server.ts`, run `npm run gen:auth`. Only generate and apply a migration when the user explicitly asks for schema changes to be committed.
 
@@ -116,6 +115,7 @@ Follow React Router's file-route conventions: https://reactrouter.com/how-to/fil
 ## Utilities & Aliases
 
 - **Path alias**: `@/*` → `app/*` (e.g. `@/lib/utils`, `@/db`)
+- **Env vars**: define and validate them in `app/lib/env.ts` with Zod; import them when needed from `@/lib/env`
 - **`cn()`** utility in `@/lib/utils` — combines `clsx` + `tailwind-merge`; use for all className concatenation
 - shadcn components can be added with `shadcn` CLI
 
