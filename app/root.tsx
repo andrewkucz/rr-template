@@ -19,7 +19,6 @@ import { NotFoundError } from "./features/errors/not-found-error";
 import "./styles/index.css";
 import { NuqsAdapter } from "nuqs/adapters/react-router/v7";
 import { ThemeScript } from "@/components/layout/theme-script";
-import AuthProvider from "./lib/auth/provider";
 import { getCookieFromReq } from "./lib/cookies";
 import { DEFAULT_THEME, THEME_COOKIE_NAME } from "./lib/theme/utils";
 import { TRPCQueryClientProvider } from "./lib/trpc/provider";
@@ -97,17 +96,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			<body>
 				<NuqsAdapter>
 					<TRPCQueryClientProvider>
-						<AuthProvider>
-							<ThemeProvider>
-								<FontProvider>
-									<DirectionProvider>
-										<NavigationProgress />
-										{children}
-										<Toaster duration={5000} />
-									</DirectionProvider>
-								</FontProvider>
-							</ThemeProvider>
-						</AuthProvider>
+						<ThemeProvider>
+							<FontProvider>
+								<DirectionProvider>
+									<NavigationProgress />
+									{children}
+									<Toaster duration={5000} />
+								</DirectionProvider>
+							</FontProvider>
+						</ThemeProvider>
 					</TRPCQueryClientProvider>
 				</NuqsAdapter>
 				<ScrollRestoration />
