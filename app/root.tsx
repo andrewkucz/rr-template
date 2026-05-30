@@ -31,6 +31,8 @@ export function meta(args: Route.MetaArgs) {
 			content: "Admin Dashboard UI built with Shadcn and React Router.",
 		},
 		{ name: "apple-mobile-web-app-title", content: "Admin" },
+		{ charset: "UTF-8" },
+		{ name: "viewport", content: "width=device-width, initial-scale=1.0" },
 	];
 }
 
@@ -43,7 +45,7 @@ export const links: Route.LinksFunction = () => [
 	},
 	{
 		rel: "stylesheet",
-		href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+		href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap",
 	},
 	{
 		rel: "icon",
@@ -105,6 +107,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 								</DirectionProvider>
 							</FontProvider>
 						</ThemeProvider>
+						w{" "}
 					</TRPCQueryClientProvider>
 				</NuqsAdapter>
 				<ScrollRestoration />

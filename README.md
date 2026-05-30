@@ -17,7 +17,6 @@ Adapted from: https://github.com/satnaing/shadcn-admin
 - Drizzle ORM
   - Postgres
 - Better Auth
-  - Better Auth UI
 - tRPC
   - React Query 
 
@@ -26,6 +25,7 @@ Also included:
 - [biome](https://biomejs.dev/guides/getting-started/) | formatting and linting
 - [nuqs](https://nuqs.dev/) | url query param management
 - [@tanstack/table](https://tanstack.com/table/latest) | headless table ui
+- [@better-auth-ui/react](https://better-auth-ui.com/) | better auth helpers 
 
 ## Dev
 
